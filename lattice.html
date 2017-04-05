@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>贪吃蛇</title>
+  <style>
+    body {
+      background: #ddd;
+      text-align: center;
+    }
+
+    #app {
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="app"></canvas>
+  <script>
+    ;(function () {
+      const app = document.getElementById('app')
+      app.width = 600
+      app.height = 600
+      const ctx = app.getContext('2d')
+      const row = 40 // 行
+      const column = 40 // 列
+
+      const rowW = app.width / row
+      const columnH = app.height / column
+
+      for (let i = 0; i < row; i++) {
+        for (let j = 0; j < column; j++) {
+          square.call(ctx, i * rowW, j * columnH, rowW, columnH)
+          if ((i + j) % 2 === 0) {
+            ctx.fill()
+          } else {
+            ctx.stroke()
+          }
+        }
+      }
+      // 绘制正方形
+      function square (x, y, w, h) {
+        this.save()
+        this.translate(x, y)
+        this.beginPath()
+        this.moveTo(0, 0)
+        this.lineTo(w, 0)
+        this.lineTo(w, h)
+        this.lineTo(0, h)
+        this.closePath()
+        this.restore()
+      }
+    })()
+  </script>
+</body>
+</html>
