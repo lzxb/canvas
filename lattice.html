@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>贪吃蛇</title>
+  <title>lattice</title>
   <style>
     body {
       background: #ddd;
@@ -24,8 +24,8 @@
       app.width = 600
       app.height = 600
       const ctx = app.getContext('2d')
-      const row = 40 // 行
-      const column = 40 // 列
+      const row = 40
+      const column = 40
 
       const rowW = app.width / row
       const columnH = app.height / column
@@ -40,7 +40,7 @@
           }
         }
       }
-      // 绘制正方形
+      // draw rectangle
       function square (x, y, w, h) {
         this.save()
         this.translate(x, y)
