@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>starry night</title>
+  <style>
+    body {
+      background: #ddd;
+      text-align: center;
+    }
+    
+    #app {
+      background: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="app" width="800" height="600"></canvas>
+  <script>
+    const canvas = document.getElementById('app')
+    const ctx = canvas.getContext('2d')
+
+    // 绘制黑色星空背景
+    ctx.beginPath()
+    ctx.moveTo(0, 0)
+    ctx.lineTo(800, 0)
+    ctx.lineTo(800, 600)
+    ctx.lineTo(0, 600)
+    ctx.closePath()
+    const grad = ctx.createLinearGradient(0, 0, 0, 600)
+    grad.addColorStop(0, '#000')
+    grad.addColorStop(1, 'blue')
+    ctx.fillStyle = grad
+    ctx.fill()
+    // 绘制星星
+    let y = 500
+    for (let i = 0; i < 1000; i++) {
+      if (i % (5000 / 10) === 0) {
+        y = parseInt(y * 0.8)
+      }
+      drawStar.call(ctx, 1, 4, Math.ceil(Math.random() * 800), Math.ceil(Math.random() * y), Math.ceil(Math.random() * 90))
+      ctx.fillStyle = '#fff'
+      ctx.fill()
+    }
+
+    // 绘制地球
+    ctx.beginPath()
+    ctx.moveTo(0, 500)
+    ctx.quadraticCurveTo(0, 550, 200, 500)
+    ctx.quadraticCurveTo(300, 600, 400, 600)
+    // ctx.closePath()
+    ctx.strokeStyle = '#fff'
+    ctx.stroke()
+
+    function drawStar (r, R, x, y, rot) {
+      this.beginPath()
+      for (var i = 0; i < 5; i++) {
+        this.lineTo(Math.cos((18 + i * 72 - rot) / 180 * Math.PI) * R + x, -Math.sin((18 + i * 72 - rot) / 180 * Math.PI) * R + y)
+        this.lineTo(Math.cos((54 + i * 72 - rot) / 180 * Math.PI) * r + x, -Math.sin((54 + i * 72 - rot) / 180 * Math.PI) * r + y)
+      }
+      this.closePath()
+    }
+  </script>
+</body>
+
+</html>
