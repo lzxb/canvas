@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>circlet</title>
+  <style>
+    body {
+      background: #ddd;
+      text-align: center;
+    }
+    
+    #app {
+      background: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="app" width="800" height="600"></canvas>
+  <script>
+    const canvas = document.getElementById('app')
+    const ctx = canvas.getContext('2d')
+    const list = []
+    // 生成随机数据
+    for (let i = 0; i < 10; i++) {
+      list.push({
+        year: 2000 + i,
+        count: Math.floor(Math.random() * 100) + 1
+      })
+    }
+    const maxCount = getMaxCount()
+
+    // 渲染出柱状图
+    list.forEach((item, index) => {
+      const top = 50
+      const width = canvas.width / list.length
+      const y = 500
+      const x = width * index
+      const share = item.count / maxCount
+      const borderLeft = index === 0 ? 10 : 5
+      const borderRight = index === list.length - 1 ? 10 : 5
+      // 左下 => 右下 => 右上 => 左上
+      ctx.moveTo(x + borderLeft, y)
+      ctx.lineTo(x + width - borderRight, y)
+      ctx.lineTo(x + width - borderRight, y - (y - top) * share)
+      ctx.lineTo(x + borderLeft, y - (y - top) * share)
+      ctx.fillStyle = 'blue'
+      ctx.fill()
+      ctx.font = '15px Arial'
+      ctx.textAlign = 'center'
+      ctx.fillText(item.year, x + width / 2, y + 30)
+    })
+    // 测试看的线
+    ctx.beginPath()
+    ctx.moveTo(0, 50)
+    ctx.lineTo(canvas.width, 50)
+    ctx.lineTo(canvas.width, 500)
+    ctx.lineTo(0, 500)
+    ctx.closePath()
+    ctx.stroke()
+
+    // 求出数据的最大值
+    function getMaxCount () {
+      let max = 0
+      list.forEach((item) => {
+        if (item.count > max) {
+          max = item.count
+        }
+      })
+      return max
+    }
+    
+  </script>
+</body>
+
+</html>
